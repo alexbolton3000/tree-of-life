@@ -1,0 +1,41 @@
+{
+  "nodes":[
+    {"name":"squirl","group":2}, 
+    {"name":"bunny","group":2},
+    {"name":"boar","group":2},
+    {"name":"martin","group":2},
+    {"name":"shrimp","group":3},
+
+    {"name":"spider","group":3},
+    {"name":"dino","group":1},
+    {"name":"bird","group":1},
+    {"name":"seagull","group":1},
+    {"name":"hawk","group":1},
+    
+    {"name":"pre_rat","group":2},
+    {"name":"cell","group":3},
+    {"name":"cat","group":2},
+    {"name":"falcon","group":1},
+    {"name":"deer","group":2},
+
+    {"name":"badger","group":2}
+  ],
+  "links":[
+    {"source":0,"target":1,"value":1},
+    {"source":0,"target":2,"value":1},
+    {"source":4,"target":5,"value":1},
+    {"source":4,"target":6,"value":1},
+    {"source":6,"target":7,"value":1},
+    {"source":7,"target":8,"value":1},
+    {"source":7,"target":9,"value":1},
+    {"source":10,"target":6,"value":1},
+    {"source":10,"target":0,"value":1},
+    {"source":10,"target":3,"value":1},
+    {"source":11,"target":4,"value":1},
+    {"source":4,"target":11,"value":1},
+    {"source":3,"target":12,"value":1},
+    {"source":9,"target":13,"value":1},
+    {"source":2,"target":14,"value":1},
+    {"source":3,"target":15,"value":1}
+  ]
+}
