@@ -48,6 +48,8 @@ var groupLogo = {
   2: logos.apple
 }
 
+
+
 URL = "http://localhost:5555/"
 function url(path) {
     return URL + path
@@ -57,13 +59,13 @@ function art(name) {
     return url('assets/vector_drawings/'+name+'.svg')
 }
 var ART_SCALE = 6
-var width = 800,
-    height = 800;
+var width = 1000,
+    height = 1200;
 
 var color = d3.scale.category20();
 
 var force = d3.layout.force()
-    .charge(-1220)
+    .charge(-2220)
     .linkDistance(100)
     .size([width, height]);
 
@@ -157,15 +159,46 @@ d3.json("http://localhost:5555/assets/data/tree_1.json", function(error, graph) 
 
 // Lock axis
 // node.attr('x', function (d){ d.x = 100})
+// 
+// 
 console.log(node)
+
+////////////////////////
+// force.on('tick', function () {
+//   nodes.attr('cx', function (d) { return d.x; });
+//   links.attr('x1', function (d) { return d.source.x; })
+//     .attr('x2', function (d) { return d.target.x; });
+// });
+/////////////////////////
+
+NAME_MOD_MAGNITUDE = 20
 
   force.on("tick", function() {
     link.attr("x1", function(d) { return d.source.x; })
-        .attr("y1", function(d) { return d.source.y; })
         .attr("x2", function(d) { return d.target.x; })
+        .attr("y1", function(d) { return d.source.y; })
         .attr("y2", function(d) { return d.target.y; });
+        // .attr("y1", function(d) { 
+        //   var name_mod = d.source.name.charCodeAt(0) % 5
+        //   return d.source.group * 100 + name_mod * NAME_MOD_MAGNITUDE; })
+        // .attr("y2", function(d) { 
+        //   var name_mod = d.target.name.charCodeAt(0) % 5
+        //   return d.target.group * 100 + name_mod * NAME_MOD_MAGNITUDE; });
 
-    node.attr("transform", function(d) { return "translate(" + (d.x - ART_SCALE / 2) + "," + (d.y - ART_SCALE / 2) + ")"; });
+    node.attr("transform", 
+      function(d) { 
+          if (d.name == 'cell') {
+              d.x = 300
+              d.y = 200
+              return "translate(" + (d.x - ART_SCALE / 2) + "," + (d.y - ART_SCALE / 2) + ")";  
+          }
+          return "translate(" + (d.x - ART_SCALE / 2) + "," + (d.y - ART_SCALE / 2) + ")"; });
+
+
+
+    // node.attr("transform", function(d) { 
+    //   var name_mod = d.name.charCodeAt(0) % 5
+    //   return "translate(" + (d.x - ART_SCALE / 2) + "," + (d.group * 100 + name_mod * NAME_MOD_MAGNITUDE) + ")"; });
   });
 });
 
