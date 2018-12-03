@@ -1,1 +1,2 @@
-python manage.py runserver
+./manage.py migrate
+./manage.py runserver
