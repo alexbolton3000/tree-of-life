@@ -1,63 +1,38 @@
+import string
+
 from django.db import models
 
+from treebeard.mp_tree import MP_Node
 
 
-
-# Model plan
-# 
-# 
-# NAME FIELDS:
-display_name
-scientific_name
-phylopic_name
-wiki_name
-# name (default ot display name)
-# 
-# TIME
-# birth
-# extinction
-# 
-# RESOURCES
-# phylopic image - CLASS
-# other images
-# 
-# TREE STUFF
-# parent 
-# child
-# 
-# 
-# 
-
-
-
-class Animal(models.Model):
+class Animal(MP_Node):
     # Basic
 
+    # Names
+    name = models.CharField(max_length=1000)
+    display_name = models.CharField(max_length=1000, blank=True, null=True)
+    scientific_name = models.CharField(max_length=1000, blank=True, null=True)
+    phylopic_name = models.CharField(max_length=1000, blank=True, null=True)
+    wiki_name = models.CharField(max_length=1000, blank=True, null=True)
 
-   	# Names
-   	name = models.CharField(max_length=1000)
-	display_name = models.CharField(max_length=1000)
-	scientific_name = models.CharField(max_length=1000)
-	phylopic_name = models.CharField(max_length=1000)
-	wiki_name = models.CharField(max_length=1000)
+    # Time
+    # In M.Y.A.
+    birth = models.IntegerField(blank=True, null=True)
+    extinction = models.IntegerField(blank=True, null=True)
 
-   	# Time
-   	# In M.Y.A.
-   	birth = models.IntegerField()
-   	extinction = models.IntegerField()
+    node_order_by = ['name']
+    def __unicode__(self):
+        return 'Category: %s' % self.name
 
-   	# Tree
-   	parent = models.ForeignKey(Animal)
-   	# , on_delete=models.CASCADE
-   	child = models.ForeignKey(Animal)
-
-   	# Admin
+    # Admin
     created_date_2 = models.DateTimeField(auto_now_add=True)
     modified_date_2 = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return f'{str(self.display_name)} ({self.pk})'
 
-
-
-
-
-
+    def save(self, *args, **kwargs):
+        print(self)
+        if not self.display_name:
+            self.display_name = string.capwords(self.name)
+        super(Animal, self).save(*args, **kwargs)
